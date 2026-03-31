@@ -52,8 +52,8 @@ use_remove_padding: False
 trainer:
   default_local_dir: /data/home/3120245632/scow/ai/appData/mjli/llm_proj/HierSummarizeRL/output/HierSummarizeRL-SFT
   default_hdfs_dir: null
-  project_name: gsm8k-sft
-  experiment_name: test
+  project_name: HierSummarizeRL
+  experiment_name: SFT
   total_epochs: 2
   total_training_steps: null
   logger: [ 'console', 'wandb' ]
