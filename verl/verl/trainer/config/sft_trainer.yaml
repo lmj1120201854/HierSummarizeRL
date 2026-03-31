@@ -56,20 +56,20 @@ trainer:
   experiment_name: test
   total_epochs: 2
   total_training_steps: null
-  logger: [ 'console', 'swanlab' ]
+  logger: [ 'console', 'wandb' ]
   seed: 1
 
   save_freq: 114
   test_freq: -1
   nnodes: 1
-  n_gpus_per_node: 8
+  n_gpus_per_node: 4
   max_ckpt_to_keep: null  # Maximum number of checkpoints to keep, set to null to keep all
 
   # Resume mode: "auto", "disable", or "resume_path"
   # "auto": resume from last checkpoint if available
   # "disable": start from scratch
   # "resume_path": resume from a user-defined path
-  resume_mode: auto
+  resume_mode: disable
 
   # Path to resume training from (used when resume_mode is "resume_path" or "auto")
   resume_from_path: null
