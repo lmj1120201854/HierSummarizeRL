@@ -1,5 +1,4 @@
-# HierSummarizeRL
-
+# HierSummarizeRL [![W&B Report](https://img.shields.io/badge/W&B-View_Report-FFBE00?style=for-the-badge&logo=WeightsAndBiases&logoColor=white)](https://api.wandb.ai/links/lmj1120201854-beijing-institute-of-technology/uzmo4qi0)
 HierSummarizeRL 是一个面向中文新闻场景的层次摘要强化学习项目，目标是让大语言模型一次性生成结构化的三级摘要，而不是只输出单一粒度的“标准摘要”。
 
 项目基于 `verl` 训练框架实现，围绕“信息覆盖是否充分、表达是否简洁流畅、输出结构是否稳定、不同层级长度是否合适”这几个核心问题设计训练与评测流程。当前仓库同时包含数据、训练脚本、奖励函数实现、评测脚本以及模型导出脚本。
