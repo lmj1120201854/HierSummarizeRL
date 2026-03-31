@@ -5,6 +5,11 @@ ulimit -n 65535
 # export CUDA_VISIBLE_DEVICES=0,1,2,3
 export HYDRA_FULL_ERROR=1
 
+export WANDB_MODE=online
+export WANDB_PROJECT=HierSummarizeRL
+export WANDB_ENTITY=lmj1120201854-beijing-institute-of-technology
+export WANDB_NAME=GRPO
+
 # verifier配置
 export COVER_VERIFIER_SERVER=127.0.0.1:8000
 export COVER_VERIFIER_SERVER_NAME=HierSummarizeRL-Cover-Verifier
