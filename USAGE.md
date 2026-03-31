@@ -28,6 +28,8 @@ git clone --depth 1 --branch v0.11.0rc3 https://github.com/vllm-project/vllm
 cd vllm
 VLLM_TARGET_DEVICE=empty pip install -v --no-build-isolation -e .
 pip install vllm-ascend==0.11.0rc0
+
+# 两个小包 json_repair、backoff
 ```
 当前SFT是在4卡910b3服务器上运行的
 ```bash
