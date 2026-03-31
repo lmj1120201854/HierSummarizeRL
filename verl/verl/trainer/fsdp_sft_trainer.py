@@ -29,6 +29,15 @@ from contextlib import nullcontext
 
 import hydra
 import torch
+
+import torch_npu # 确保 NPU 后端被激活
+
+# Monkey Patch: 欺骗那些硬编码了 CUDA 的第三方库
+if hasattr(torch, 'npu') and torch.npu.is_available():
+    torch.cuda.current_device = torch.npu.current_device
+    torch.cuda.is_available = torch.npu.is_available
+    torch.cuda.device_count = torch.npu.device_count
+    
 import torch.distributed
 from omegaconf import DictConfig
 from peft import LoraConfig, TaskType, get_peft_model
