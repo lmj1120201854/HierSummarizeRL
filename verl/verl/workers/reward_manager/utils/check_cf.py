@@ -137,7 +137,7 @@ def process(item):
 
 
 def process_eval(data):
-    max_workers = 512
+    max_workers = 128
     futures = []
     results = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:

@@ -11,10 +11,10 @@ export WANDB_ENTITY=lmj1120201854-beijing-institute-of-technology
 export WANDB_NAME=GRPO
 
 # verifier配置
-export COVER_VERIFIER_SERVER=10.0.8.77:8000
+export COVER_VERIFIER_SERVER=10.0.7.245:8000
 export COVER_VERIFIER_SERVER_NAME=HierSummarizeRL-Cover-Verifier
 
-export CF_VERIFIER_SERVER=10.0.8.110:8000
+export CF_VERIFIER_SERVER=10.0.2.183:8000
 export CF_VERIFIER_SERVER_NAME=HierSummarizeRL-CF-Verifier
 
 python3 -m verl.trainer.main_ppo \
@@ -62,4 +62,8 @@ python3 -m verl.trainer.main_ppo \
     data.train_files=/data/home/3120245632/scow/ai/appData/mjli/llm_proj/HierSummarizeRL/data/rl_data/nlpcc_data.rl.train.parquet \
     data.val_files=/data/home/3120245632/scow/ai/appData/mjli/llm_proj/HierSummarizeRL/data/rl_data/nlpcc_data.rl.test.parquet \
     trainer.total_epochs=2 \
+    ++actor_rollout_ref.rollout.enable_chunked_prefill=False \
+    ++actor_rollout_ref.rollout.enable_prefix_caching=False \
+    trainer.project_name="$WANDB_PROJECT" \
+    trainer.experiment_name="$WANDB_NAME" \
     actor_rollout_ref.rollout.update_weights_bucket_megabytes=512 $@
