@@ -114,27 +114,68 @@ def process(item):
     return ex_eval, short_eval, long_eval
 
 
+# def process_eval(data):
+#     max_workers = 128
+#     futures = []
+#     result = []
+#     with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
+#         for item in data:
+#             futures.append(executor.submit(process, item))
+
+#         pairs = [(item, future) for item, future in zip(data, futures)]
+#         print(f"开始抓取覆盖率评估, 数量{len(data)}, 并发数{max_workers}")
+#         for item, future in tqdm(pairs):
+#             points = future.result()
+#             ex, short, _long = points
+#             new_item = {
+#                 "extreme_short_eval": ex,
+#                 "short_eval": short, 
+#                 "long_eval": _long
+#             }
+#             result.append(new_item)
+#     return result
+
+
 def process_eval(data):
+    # 优化 1：压低外层并发（因为内层还有 3 并发，32 * 3 = 96，刚好在 vLLM 舒适区）
     max_workers = 128
-    futures = []
-    result = []
+    
+    # 优化 2：【最长优先策略】将数据按 prompt 长度降序排列
+    # 让最难啃的骨头最先丢进线程池，最大程度掩盖长尾时间
+    indexed_data = list(enumerate(data))
+    indexed_data = sorted(
+        indexed_data, 
+        key=lambda x: len(x[1].get("response", str(x[1]))), 
+        reverse=True
+    )
+
+    result_dict = {} # 用于打乱后恢复原始顺序
+    
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
-        for item in data:
-            futures.append(executor.submit(process, item))
+        # 提交任务，并记录 future 对应的原始索引
+        future_to_idx = {executor.submit(process, item): idx for idx, item in indexed_data}
+        
+        print(f"开始抓取覆盖率评估, 数量{len(data)}, 外层并发数{max_workers}")
+        
+        # 优化 3：【乱序收割】谁先算完就先拿谁的结果，彻底告别 tqdm 假死
+        for future in tqdm(concurrent.futures.as_completed(future_to_idx), total=len(data)):
+            idx = future_to_idx[future]
+            try:
+                ex, short, _long = future.result()
+                result_dict[idx] = {
+                    "extreme_short_eval": ex,
+                    "short_eval": short, 
+                    "long_eval": _long
+                }
+            except Exception as e:
+                # 优化 4：增加容错，防止某个 API 报错导致整个评估崩溃
+                print(f"Index {idx} 评估失败: {e}")
+                result_dict[idx] = {"extreme_short_eval": [], "short_eval": [], "long_eval": []}
 
-        pairs = [(item, future) for item, future in zip(data, futures)]
-        print(f"开始抓取覆盖率评估, 数量{len(data)}, 并发数{max_workers}")
-        for item, future in tqdm(pairs):
-            points = future.result()
-            ex, short, _long = points
-            new_item = {
-                "extreme_short_eval": ex,
-                "short_eval": short, 
-                "long_eval": _long
-            }
-            result.append(new_item)
+    # 按原始数据的输入顺序重组结果
+    result = [result_dict[i] for i in range(len(data))]
+    
     return result
-
 
 def get_cover_scores(data):
     result = process_eval(data)

@@ -57,7 +57,7 @@ python3 -m verl.trainer.main_ppo \
     trainer.save_freq=10 \
     trainer.test_freq=-1 \
     trainer.val_before_train=False \
-    trainer.resume_mode=auto \
+    trainer.resume_mode=disable \
     trainer.device=npu \
     data.train_files=/data/home/3120245632/scow/ai/appData/mjli/llm_proj/HierSummarizeRL/data/rl_data/nlpcc_data.rl.train.parquet \
     data.val_files=/data/home/3120245632/scow/ai/appData/mjli/llm_proj/HierSummarizeRL/data/rl_data/nlpcc_data.rl.test.parquet \
