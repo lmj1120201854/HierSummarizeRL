@@ -66,4 +66,6 @@ python3 -m verl.trainer.main_ppo \
     ++actor_rollout_ref.rollout.enable_prefix_caching=False \
     trainer.project_name="$WANDB_PROJECT" \
     trainer.experiment_name="$WANDB_NAME" \
+    actor_rollout_ref.ref.use_torch_compile=False \
+    actor_rollout_ref.actor.use_torch_compile=False \
     actor_rollout_ref.rollout.update_weights_bucket_megabytes=512 $@

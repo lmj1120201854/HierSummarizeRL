@@ -277,6 +277,167 @@ total_reward = 0.8 * cover_reward + 0.2 * cf_reward + json_format_reward + lengt
 
 当前离线评测集为 `eval/dataset/nlpcc_data_test.jsonl`，包含 1,000 条样本和参考三级摘要。
 
+下面给出当前几组代表性模型在测试集上的 ROUGE 结果。为了更细致地观察不同层级摘要的表现，结果分别报告了 `extreme_short`、`short`、`long` 三个层级上的 Recall、Precision 和 F1。
+
+从结果上看：
+
+- `Qwen3-8B-RL-step100` 在 `short` 和 `long` 层级上整体表现最好，说明 GRPO 对中短篇幅层级摘要带来了稳定增益
+- `Qwen3-8B-RL-step70` 在 `extreme_short` 层级上已经显著优于原始 `Qwen3-8B`
+- `Qwen3-14B` 在 `extreme_short` 的 Precision 上有竞争力，但在 `short`、`long` 层级上整体不如 RL 后的 8B 模型
+
+#### Recall 指标
+
+<table>
+  <thead>
+    <tr>
+      <th rowspan="2">Metric</th>
+      <th colspan="3">Qwen3-8B</th>
+      <th colspan="3">Qwen3-8B-RL-step70</th>
+      <th colspan="3">Qwen3-8B-RL-step100</th>
+      <th colspan="3">Qwen3-14B</th>
+    </tr>
+    <tr>
+      <th>extreme-short</th>
+      <th>short</th>
+      <th>long</th>
+      <th>extreme-short</th>
+      <th>short</th>
+      <th>long</th>
+      <th>extreme-short</th>
+      <th>short</th>
+      <th>long</th>
+      <th>extreme-short</th>
+      <th>short</th>
+      <th>long</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ROUGE-1</td>
+      <td>0.641</td><td>0.562</td><td>0.579</td>
+      <td>0.717</td><td>0.589</td><td>0.635</td>
+      <td>0.713</td><td>0.607</td><td>0.640</td>
+      <td>0.670</td><td>0.561</td><td>0.577</td>
+    </tr>
+    <tr>
+      <td>ROUGE-2</td>
+      <td>0.400</td><td>0.285</td><td>0.311</td>
+      <td>0.456</td><td>0.310</td><td>0.361</td>
+      <td>0.459</td><td>0.329</td><td>0.372</td>
+      <td>0.412</td><td>0.281</td><td>0.308</td>
+    </tr>
+    <tr>
+      <td>ROUGE-L</td>
+      <td>0.590</td><td>0.451</td><td>0.441</td>
+      <td>0.661</td><td>0.477</td><td>0.500</td>
+      <td>0.658</td><td>0.497</td><td>0.504</td>
+      <td>0.618</td><td>0.446</td><td>0.441</td>
+    </tr>
+  </tbody>
+</table>
+
+#### Precision 指标
+
+<table>
+  <thead>
+    <tr>
+      <th rowspan="2">Metric</th>
+      <th colspan="3">Qwen3-8B</th>
+      <th colspan="3">Qwen3-8B-RL-step70</th>
+      <th colspan="3">Qwen3-8B-RL-step100</th>
+      <th colspan="3">Qwen3-14B</th>
+    </tr>
+    <tr>
+      <th>extreme-short</th>
+      <th>short</th>
+      <th>long</th>
+      <th>extreme-short</th>
+      <th>short</th>
+      <th>long</th>
+      <th>extreme-short</th>
+      <th>short</th>
+      <th>long</th>
+      <th>extreme-short</th>
+      <th>short</th>
+      <th>long</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ROUGE-1</td>
+      <td>0.706</td><td>0.577</td><td>0.609</td>
+      <td>0.687</td><td>0.588</td><td>0.618</td>
+      <td>0.702</td><td>0.588</td><td>0.632</td>
+      <td>0.707</td><td>0.584</td><td>0.617</td>
+    </tr>
+    <tr>
+      <td>ROUGE-2</td>
+      <td>0.443</td><td>0.301</td><td>0.336</td>
+      <td>0.438</td><td>0.318</td><td>0.358</td>
+      <td>0.453</td><td>0.327</td><td>0.375</td>
+      <td>0.437</td><td>0.304</td><td>0.340</td>
+    </tr>
+    <tr>
+      <td>ROUGE-L</td>
+      <td>0.655</td><td>0.479</td><td>0.484</td>
+      <td>0.634</td><td>0.492</td><td>0.498</td>
+      <td>0.649</td><td>0.494</td><td>0.511</td>
+      <td>0.657</td><td>0.484</td><td>0.492</td>
+    </tr>
+  </tbody>
+</table>
+
+#### F1 分数
+
+<table>
+  <thead>
+    <tr>
+      <th rowspan="2">Metric</th>
+      <th colspan="3">Qwen3-8B</th>
+      <th colspan="3">Qwen3-8B-RL-step70</th>
+      <th colspan="3">Qwen3-8B-RL-step100</th>
+      <th colspan="3">Qwen3-14B</th>
+    </tr>
+    <tr>
+      <th>extreme-short</th>
+      <th>short</th>
+      <th>long</th>
+      <th>extreme-short</th>
+      <th>short</th>
+      <th>long</th>
+      <th>extreme-short</th>
+      <th>short</th>
+      <th>long</th>
+      <th>extreme-short</th>
+      <th>short</th>
+      <th>long</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ROUGE-1</td>
+      <td>0.664</td><td>0.564</td><td>0.588</td>
+      <td>0.694</td><td>0.584</td><td>0.622</td>
+      <td>0.700</td><td>0.593</td><td>0.632</td>
+      <td>0.679</td><td>0.567</td><td>0.591</td>
+    </tr>
+    <tr>
+      <td>ROUGE-2</td>
+      <td>0.415</td><td>0.289</td><td>0.319</td>
+      <td>0.442</td><td>0.311</td><td>0.356</td>
+      <td>0.450</td><td>0.325</td><td>0.371</td>
+      <td>0.418</td><td>0.290</td><td>0.320</td>
+    </tr>
+    <tr>
+      <td>ROUGE-L</td>
+      <td>0.612</td><td>0.459</td><td>0.457</td>
+      <td>0.640</td><td>0.480</td><td>0.494</td>
+      <td>0.646</td><td>0.491</td><td>0.503</td>
+      <td>0.628</td><td>0.459</td><td>0.460</td>
+    </tr>
+  </tbody>
+</table>
+
 ## 仓库结构
 
 ```text
