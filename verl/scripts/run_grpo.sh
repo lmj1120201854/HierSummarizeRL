@@ -1,4 +1,3 @@
-# 3机6卡(每个机器2卡npu)配置
 set -x
 
 ulimit -n 65535
@@ -12,10 +11,10 @@ export WANDB_ENTITY=lmj1120201854-beijing-institute-of-technology
 export WANDB_NAME=GRPO
 
 # verifier配置
-export COVER_VERIFIER_SERVER=10.0.2.85:8000
-export COVER_VERIFIER_SERVER_NAME=HierSummarizeRL-Cover-Verifier
+export COVER_VERIFIER_SERVER=10.0.8.203:8000
+export COVER_VERIFIER_SERVER_NAME=HierSummarizeRL-CF-Verifier
 
-export CF_VERIFIER_SERVER=10.0.1.70:8000
+export CF_VERIFIER_SERVER=10.0.8.203:8000
 export CF_VERIFIER_SERVER_NAME=HierSummarizeRL-CF-Verifier
 
 python3 -m verl.trainer.main_ppo \
@@ -55,7 +54,7 @@ python3 -m verl.trainer.main_ppo \
     trainer.default_local_dir=/data/home/3120245632/scow/ai/appData/mjli/llm_proj/HierSummarizeRL/output/HierSummarizeRL-Qwen3-8B-RL \
     trainer.n_gpus_per_node=2 \
     trainer.nnodes=3 \
-    trainer.save_freq=100 \
+    trainer.save_freq=10 \
     trainer.test_freq=-1 \
     trainer.val_before_train=False \
     trainer.resume_mode=disable \
