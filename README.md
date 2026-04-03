@@ -389,8 +389,8 @@ total_reward = 0.8 * cover_reward + 0.2 * cf_reward + json_format_reward + lengt
 
 从结果上看：
 
-- `Qwen3-8B-RL-step100` 在 `short` 和 `long` 层级上整体表现最好，说明 GRPO 对中短篇幅层级摘要带来了稳定增益
-- `Qwen3-8B-RL-step70` 在 `extreme_short` 层级上已经显著优于原始 `Qwen3-8B`
+- `Qwen3-8B-RL-step200` 在 `short` 和 `long` 层级上整体表现最好，说明 GRPO 对中短篇幅层级摘要带来了稳定增益
+- `Qwen3-8B-RL-step100` 在 `extreme_short` 层级上已经显著优于原始 `Qwen3-8B`
 - `Qwen3-14B` 在 `extreme_short` 的 Precision 上有竞争力，但在 `short`、`long` 层级上整体不如 RL 后的 8B 模型
 
 #### Recall 指标
@@ -400,8 +400,8 @@ total_reward = 0.8 * cover_reward + 0.2 * cf_reward + json_format_reward + lengt
     <tr>
       <th rowspan="2">Metric</th>
       <th colspan="3">Qwen3-8B</th>
-      <th colspan="3">Qwen3-8B-RL-step70</th>
       <th colspan="3">Qwen3-8B-RL-step100</th>
+      <th colspan="3">Qwen3-8B-RL-step200</th>
       <th colspan="3">Qwen3-14B</th>
     </tr>
     <tr>
@@ -451,8 +451,8 @@ total_reward = 0.8 * cover_reward + 0.2 * cf_reward + json_format_reward + lengt
     <tr>
       <th rowspan="2">Metric</th>
       <th colspan="3">Qwen3-8B</th>
-      <th colspan="3">Qwen3-8B-RL-step70</th>
       <th colspan="3">Qwen3-8B-RL-step100</th>
+      <th colspan="3">Qwen3-8B-RL-step200</th>
       <th colspan="3">Qwen3-14B</th>
     </tr>
     <tr>
@@ -502,8 +502,8 @@ total_reward = 0.8 * cover_reward + 0.2 * cf_reward + json_format_reward + lengt
     <tr>
       <th rowspan="2">Metric</th>
       <th colspan="3">Qwen3-8B</th>
-      <th colspan="3">Qwen3-8B-RL-step70</th>
       <th colspan="3">Qwen3-8B-RL-step100</th>
+      <th colspan="3">Qwen3-8B-RL-step200</th>
       <th colspan="3">Qwen3-14B</th>
     </tr>
     <tr>
